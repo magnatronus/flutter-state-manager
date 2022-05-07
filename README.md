@@ -1,39 +1,48 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# AppManager
+A simple Flutter state management system to that uses ChangeNotifier to propagate data changes and state around a Flutter application. The system comprises of just 2 parts
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+- the use of the **AppManager** class
+- the create of a state/data class derived from a **ChangeNotifier**
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+**AppManager** is used to wrap the application while the derived **ChangeNotifier** is used to hold the application data and provides access to any internal values as well as the ability to provide methods to access and manipulate the application data.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Example use
+The example directory contains an updated version of the vanilla Flutter application, but updated to show the use of **AppManager**. The example tracks the internal count as well as providing a method to increment the count.
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+The easiest way to use **AppManager** is to wrap the complete app as shown below:
 
 ```dart
-const like = 'sample';
+import 'package:appmanager/appmanager.dart';
+import 'package:example/mydata.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    AppManager(
+      child: const MyApp(),
+      data: MyData()
+    )
+  );
+}
 ```
 
-## Additional information
+if data needs to be loaded on initial start up then the code snippet could be changed as follows:
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```dart
+import 'package:appmanager/appmanager.dart';
+import 'package:example/mydata.dart';
+import 'package:flutter/material.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  MyData data = MyData(); 
+  await data.loadData(); 
+  runApp(
+    AppManager(
+      child: const MyApp(), 
+      data: data
+    )
+  );
+}
+```
+

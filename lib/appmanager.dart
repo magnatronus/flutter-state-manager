@@ -18,7 +18,7 @@ class _AppController extends InheritedWidget {
 
 
 /// This is the main AppManager that is used to wrap a Flutter App to provide State management throughout the app
-/// [child] is the main app wodget
+/// [child] is the main app widget
 /// [data] is a ChangeNotifier object used to hold and maintain data and state
 /// 
 /// Currently designed to propagate ALL notified data changes down the widget tree
